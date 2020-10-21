@@ -2,6 +2,8 @@
 
 
 # TODO: 
+- [ ] Read about REPL
+- [ ] FInish all 8 episodes of Parens of the Dead
 - [ ] Say "Hello, ClojureScript" from port 80 (it will be a client app)
 - [ ] Ask from client is backend here?
 - [ ] Receive "Hello, I am a Backend Clojure" from backend
