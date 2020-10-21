@@ -3,6 +3,7 @@
 
 # TODO: 
 - [ ] Read about REPL
+- [ ] Read 2 chapters of [it](https://www.braveclojure.com/getting-started/)
 - [ ] FInish all 8 episodes of Parens of the Dead
 - [ ] Say "Hello, ClojureScript" from port 80 (it will be a client app)
 - [ ] Ask from client is backend here?
