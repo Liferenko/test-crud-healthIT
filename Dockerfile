@@ -1,5 +1,7 @@
 FROM clojure
-COPY . /usr/src/app
 WORKDIR /usr/src/app
-# Add PostgreSQL 
-CMD ["lein", "run"]
+RUN ["apt-get", "update"]
+RUN ["apt-get", "install", "-y", "vim"]
+RUN ["apt-get", "install", "-y", "tree"]
+RUN ["cp", "vimrc", "$HOME/.vimrc"]
+COPY . /usr/src/app
