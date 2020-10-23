@@ -9,7 +9,7 @@
 -- [x] HTTP server. [HTTP Kit](https://github.com/http-kit/http-kit) won a battle with Aleph (aleph seems a bit abounded)
 -- [x] [Hiccup](https://github.com/weavejester/hiccup/) as an HTML rendering
 -- [ ] [Rum](https://github.com/tonsky/rum#comparison-to-other-frameworks) maybe can be useful as UI for ClojureScript
--- [ ] Add bootstrap as a CSS assets
+-- [x] Add bootstrap as a CSS assets
 
 - [ ] Ask from client is backend here?
 - [ ] Receive "Hello, I am a Backend Clojure" from backend
