@@ -20,6 +20,8 @@
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [http-kit "2.5.0"]
                  [clj-time "0.14.0"]
-                 [hiccup "1.0.5"]]
+                 [hiccup "1.0.5"]
+                 [compojure "1.6.2"]
+                ]
   :repl-options {:init-ns tiny-clinique.main}
   :main tiny-clinique.main)
