@@ -16,6 +16,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
 
+    " Clojure + REPL
+    Plug 'rhysd/reply.vim', { 'on': ['Repl', 'ReplAuto'] }
+
+
     " Multiple Plug commands can be written in a single line using | separators
     ""Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
