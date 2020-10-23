@@ -1,4 +1,5 @@
 (ns tiny-clinique.main
+  (:use [hiccup.page :only (include-css)])
   (:require [org.httpkit.server :refer [run-server]]
             [clj-time.core :as t]
             [hiccup.core :refer [html]]
@@ -11,11 +12,27 @@
   (let [response {:status 200
                   :headers {"Content-Type" "text/html"}
                   :body (html
-                    [:head [:title title]]
+                    [:head
+                     [:title "Welcome back, " title]
+                     (include-css "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css")
+                    ]
+                    [:body
+                   [:div.content
+                     [:div.jumbotron
+                      [:span {:class "lol"} "Time in " content " " (t/time-now)] ] ] ])}]
+    response)
+  )
+
+(defn list-of-patients
+  [patient_name & patient_city]
+  (let [response {:status 200
+                  :headers {"Content-Type" "text/html"}
+                  :body (html
+                    [:head [:title patient_name]]
                     [:body
                    [:div.content
                      [:div.register-form
-                      [:span {:class "lol"} "Time in " content " " (t/time-now)] ] ] ])}]
+                      [:span {:class "lol"} "Time in " patient_city " " (t/time-now)] ] ] ])}]
     response)
   )
 
