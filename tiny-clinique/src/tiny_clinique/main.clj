@@ -6,16 +6,16 @@
             [compojure.route :as route]
             ))
 
-(defn get-time
-  []
+(defn patient-data
+  [title & content]
   (let [response {:status 200
                   :headers {"Content-Type" "text/html"}
                   :body (html
+                    [:head [:title title]]
+                    [:body
                    [:div.content
                      [:div.register-form
-                      [:span {:class "lol"} (t/time-now)]
-                     ]
-                   ])}]
+                      [:span {:class "lol"} "Time in " content " " (t/time-now)] ] ] ])}]
     response)
   )
 
@@ -39,7 +39,7 @@
 
 (defroutes app
   (GET "/" [] (index))
-  (GET "/get-time" [] (get-time))
+  (GET "/patient-info" [] (patient-data "Paul" "Kiev"))
   (route/not-found (html [:h1.title "404. Page not found"]))
   )
 
