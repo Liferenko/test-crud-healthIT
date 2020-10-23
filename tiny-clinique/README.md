@@ -1,44 +1,24 @@
-# tiny-clinique
+[Source: delete asap](https://docs.google.com/document/d/1WJAk6iOF9-p_oI_3BIixNjGZSgIWYwvCZUFv7dBvc1w/edit)
 
-FIXME: description
 
-## Installation
+# TODO:
+- [ ] Read about REPL
+- [ ] Read 2 chapters of [it](https://www.braveclojure.com/getting-started/)
+- [ ] Finish all 8 episodes of Parens of the Dead
+- [ ] Say "Hello, ClojureScript" from port 80 (it will be a client app)
+- [x] HTTP server. [HTTP Kit](https://github.com/http-kit/http-kit) won a battle with Aleph (aleph seems a bit abounded)
+- [x] [Hiccup](https://github.com/weavejester/hiccup/) as an HTML rendering
+- [ ] [Rum](https://github.com/tonsky/rum#comparison-to-other-frameworks) maybe can be useful as UI for ClojureScript
+- [x] Add bootstrap as a CSS assets
 
-Download from http://example.com/FIXME.
 
-## Usage
+- [ ] Ask from client is backend here?
+- [ ] Receive "Hello, I am a Backend Clojure" from backend
+- [ ] DB - PostgreSQL
+- [ ] Testing
+- [ ] CI with K8s
+- [ ] Add "ahead of time" compilation in Dockerfile [sause here](https://medium.com/@divyum/building-a-simple-http-server-in-clojure-part-iii-dockerizing-clojure-application-1f53a6a90af2)
 
-FIXME: explanation
 
-    $ java -jar tiny-clinique-0.1.0-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
-
-## License
-
-Copyright © 2020 FIXME
-
-This program and the accompanying materials are made available under the
-terms of the Eclipse Public License 2.0 which is available at
-http://www.eclipse.org/legal/epl-2.0.
-
-This Source Code may also be made available under the following Secondary
-Licenses when the conditions for such availability set forth in the Eclipse
-Public License, v. 2.0 are satisfied: GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or (at your
-option) any later version, with the GNU Classpath Exception which is available
-at https://www.gnu.org/software/classpath/license.html.
+Clean-up TODO:
+- [ ] routing library Bidi. Are you sure you need it?

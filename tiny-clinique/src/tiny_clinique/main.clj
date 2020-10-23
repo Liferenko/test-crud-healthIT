@@ -40,17 +40,21 @@
   []
   (let [response {:status 200
      :headers {"Content-Type" "text/html"}
-     ;; :body (str (t/time-now))})
      :body (html
-             [:div.header
-              [:h1.title "Welcome to Tiny Clinique"]
-              [:h3.description "Hello from port 8080."]
-             ]
-             [:div.content
-               [:div.register-form
-                [:span {:class "lol"} (t/time-now)]
+              [:head
+               [:title "Welcome"]
+               (include-css "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css")
+              ]
+              [:body
+               [:div.header
+                [:h1.title "Welcome to Tiny Clinique"]
+                [:h3.description "Hello from port 8080."]
                ]
-             ]
+               [:div.content
+                 [:div.register-form
+                  [:span {:class "lol"} (t/time-now)]
+                 ]
+               ]]
              )}]
     response))
 

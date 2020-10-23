@@ -5,3 +5,4 @@ RUN ["apt-get", "install", "-y", "vim"]
 RUN ["apt-get", "install", "-y", "tree"]
 COPY . /usr/src/app
 RUN ["mv", ".vimrc", "//root/.vimrc"]
+EXPOSE 8080
