@@ -1,6 +1,12 @@
 (ns tiny-clinique.main
-  (:require [tiny-clinique.system :refer [init-system start!]]))
+  (:require [org.httpkit.server :refer [run-server]]
+            [clj-time.core :as t]))
+
+(defn app [req]
+  {:status 200
+   :headers {"Content-Type" "text/html"}
+   :body (str (t/time-now))})
 
 (defn -main [& args]
-  (init-system)
-  (start!))
+  (run-server app {:port 8080})
+  (println "Server started on port 8080"))
