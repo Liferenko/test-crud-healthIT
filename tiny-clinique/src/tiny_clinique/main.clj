@@ -32,7 +32,10 @@
   (let [response {:status 200
                   :headers {"Content-Type" "text/html"}
                   :body (html
-                    [:head [:title "List of pacients"]]
+                    [:head 
+                     [:title "List of pacients"]
+                     (include-css "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css")
+                    ]
                     [:body
                    [:div.content
                      [:div.register-form
