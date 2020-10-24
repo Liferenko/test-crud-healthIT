@@ -1,5 +1,11 @@
 [Source: delete asap](https://docs.google.com/document/d/1WJAk6iOF9-p_oI_3BIixNjGZSgIWYwvCZUFv7dBvc1w/edit)
 
+Note:
+- `lein repl` |> open vim |> `cpt` in vim
+- `cpt` == :Eval 
+- `cpl` == :Last
+- gf on lib == go to file (same as it was with Elixir-LS plugin)
+
 
 # TODO:
 - [ ] Read about REPL
