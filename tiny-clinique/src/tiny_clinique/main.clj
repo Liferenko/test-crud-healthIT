@@ -23,7 +23,7 @@
                      [:div.jumbotron
                       [:h3.patient__name "First name: " patient_name]
                       [:h4.patient__city "City: " patient_city]
-                      [:span {:class "lol"} "Time in " patient_city " " (t/time-now)] ] ] ])}]
+                      [:span {:class "lol"} (str "Time in " patient_city " " (t/time-now))]] ] ])}]
     response)
   )
 
