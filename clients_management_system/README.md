@@ -1,4 +1,8 @@
 
+### TODO:
+- [x] rename all items as clients
+- [ ] extend item data as client data
+
 ### Development mode
 ```
 npm install

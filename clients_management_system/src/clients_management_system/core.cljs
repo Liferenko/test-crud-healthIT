@@ -3,36 +3,40 @@
       [reagent.core :as r]
       [reagent.dom :as d]))
 
-(def todos (r/atom 
-             [{:desc "Boil pasta" :color "green"}
-              {:desc "Run fasta" :color "red"}
-              {:desc "Say No" :color "red"}]))
+(def clients (r/atom 
+             [{:fname "Sam" :lname "Johnson" :city "Lion" :verified true}
+              {:fname "Mario" :lname "Addy" :city "New Jersey" :verified false}
+              {:fname "Carlos" :lname "Perez" :city "Mexico" :verified false}]))
 
 ;; -------------------------
 ;; Views
 
-(defn todo-form []
+(defn client-form []
   (let [new-item (r/atom "")]
     (fn []
     [:form {:on-submit (fn [event] 
                          (.preventDefault event) 
-                         (swap! todos conj {:color "green" :desc @new-item}))}
+                         (swap! clients conj {:verified false :fname @new-item})
+                         (reset! new-item "")
+                         )}
      [:input.input-group-text {:type "text" 
                                :value @new-item 
                                :placeholder "Add a new item below:"
                                :on-change (fn [event] 
                                             (reset! new-item (.-value (.-target event))))}]])))
 
-(defn todo-item [todo]
-  [:li.list-group-item.list-group-item-primary {:style (:color {:color todo})} (:desc todo) ])
+(defn client-data [client]
+  [:li.list-group-item.list-group-item-primary 
+   {:style {:color (if (:verified client) "green" "red")}} 
+   (:fname client) " | " (:lname client) " | " (:city client)])
 
 (defn home-page []
-  [:div.container-fluid [:h2 "List of items"]
-   [:p "Add a new item below:"]
-   [todo-form]
+  [:div.container-fluid [:h2 "List of clients"]
+   [:p "Add a new client's info below:"]
+   [client-form]
    [:ul.container-fluid
-    (for [todo @todos]
-      (todo-item todo))]])
+    (for [client @clients]
+      (client-data client))]])
 
 ;; -------------------------
 ;; Initialize app
