@@ -4,9 +4,25 @@
       [reagent.dom :as d]))
 
 (def clients (r/atom 
-             [{:fname "Sam" :lname "Johnson" :city "Lion" :verified true}
-              {:fname "Mario" :lname "Addy" :city "New Jersey" :verified false}
-              {:fname "Carlos" :lname "Perez" :city "Mexico" :verified false}]))
+             [{:fullName "Robin Scherbatski" 
+               :gender "female" 
+               :birthDate "TODO date as valid Date structure" 
+               :address "Toronto"
+               :policyNumber "123-45-6789" 
+               :verified false}
+              {:fullName "Sam Bridges" 
+               :gender "male" 
+               :birthDate "TODO date as valid Date structure" 
+               :address "Lion" 
+               :policyNumber "123-45-6789" 
+               :verified true}
+              {:fullName "Mario Fernandes" 
+               :gender "other" 
+               :birthDate "TODO date as valid Date structure" 
+               :address "New Jersey" 
+               :policyNumber "123-45-6789" 
+               :verified false}
+              ]))
 
 ;; -------------------------
 ;; Views
@@ -16,7 +32,7 @@
     (fn []
     [:form {:on-submit (fn [event] 
                          (.preventDefault event) 
-                         (swap! clients conj {:verified false :fname @new-item})
+                         (swap! clients conj {:verified false :fullName @new-item})
                          (reset! new-item "")
                          )}
      [:input.input-group-text {:type "text" 
@@ -26,9 +42,15 @@
                                             (reset! new-item (.-value (.-target event))))}]])))
 
 (defn client-data [client]
-  [:li.list-group-item.list-group-item-primary 
+  [:li.list-group-item.list-group-item-primary
    {:style {:color (if (:verified client) "green" "red")}} 
-   (:fname client) " | " (:lname client) " | " (:city client)])
+   [:div.row
+     [:div.col (:fullName client)] 
+     [:div.col (:gender client)] 
+     [:div.col (:birthDate client)]
+     [:div.col (:address client)]
+     [:div.col (:policyNumber client)]
+   ]])
 
 (defn home-page []
   [:div.container-fluid [:h2 "List of clients"]
