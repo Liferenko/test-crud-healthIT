@@ -24,6 +24,7 @@ Note:
 - [ ] Testing
 - [ ] CI with K8s
 - [ ] Add "ahead of time" compilation in Dockerfile [sause here](https://medium.com/@divyum/building-a-simple-http-server-in-clojure-part-iii-dockerizing-clojure-application-1f53a6a90af2)
+- [ ] CLJS production builds - [here](https://clojurescript.org/guides/quick-start)
 
 
 Clean-up TODO:
