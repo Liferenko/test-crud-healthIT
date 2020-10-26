@@ -30,19 +30,20 @@
 ;; Views
 (defn formInput 
   [atomValue placeholder value]
+  [:div.col-6
      [:input.input-group-text {:type "text"
                                :value atomValue
                                :placeholder placeholder
                                :on-change (fn [event]
                                             (reset! value (.-value (.-target event))))}]
-  )
+  ])
 
 (defn patient-form []
   (let [fullName (r/atom "") 
         gender (r/atom "other")
-        bitrhDate (r/atom "1992/12/11")
+        birthDate (r/atom "")
         address (r/atom "")
-        policyNumber (r/atom "101-11-0001")]
+        policyNumber (r/atom "")]
     (fn []
     [:div.card-body 
      [:h4.card-title "New patient's data"]
@@ -50,15 +51,21 @@
                          (.preventDefault event) 
                          (swap! patients conj {:fullName @fullName
                                                :gender @gender
-                                               :birthDate @bitrhDate
+                                               :birthDate @birthDate
                                                :address @address
                                                :policyNumber @policyNumber
                                                :verified false })
                          (reset! fullName "")
                          (reset! address "")
                          )}
+      [:div.row
        [formInput @fullName "Full name" fullName]
+       [formInput @gender "Select gender" gender]
+       [formInput @birthDate "Birth date" birthDate]
        [formInput @address "Address" address]
+       [formInput @policyNumber "Enter incurance policy number" policyNumber]
+      ]
+
        [:button.btn.btn-primary {:type :submit} "Add new patient"]
      ]])))
 
