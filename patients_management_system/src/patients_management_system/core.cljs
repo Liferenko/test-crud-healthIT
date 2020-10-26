@@ -10,12 +10,14 @@
                :address "Toronto"
                :policyNumber "123-45-6789" 
                :verified false}
+
               {:fullName "Sam Bridges" 
                :gender "male" 
                :birthDate "TODO date as valid Date structure" 
                :address "Lion" 
                :policyNumber "123-45-6789" 
                :verified true}
+
               {:fullName "Mario Fernandes" 
                :gender "other" 
                :birthDate "TODO date as valid Date structure" 
@@ -28,19 +30,31 @@
 ;; Views
 
 (defn patient-form []
-  (let [new-patient (r/atom "")]
+  (let [fullName (r/atom "") 
+        gender (r/atom "other")
+        bitrhDate (r/atom "1992/12/11")
+        address (r/atom "Kiev")
+        policyNumber (r/atom "101-11-0001")]
     (fn []
     [:div.container 
      [:form {:on-submit (fn [event] 
                          (.preventDefault event) 
-                         (swap! patients conj {:verified false :fullName @new-patient})
-                         (reset! new-patient "")
+                         (swap! patients conj {
+                                               :verified false 
+                                               :fullName @fullName
+                                               :gender @gender
+                                               :birthDate @bitrhDate
+                                               :address @address
+                                               :policyNumber @policyNumber})
+                         (reset! fullName "")
                          )}
-     [:input.input-group-text {:type "text" 
-                               :value @new-patient 
-                               :placeholder "Add a new item below:"
-                               :on-change (fn [event] 
-                                            (reset! new-patient (.-value (.-target event))))}]]])))
+       [:input.input-group-text {:type "text" 
+                                 :value @fullName 
+                                 :placeholder "Add a new item below:"
+                                 :on-change (fn [event] 
+                                              (reset! fullName (.-value (.-target event))))}]
+       [:button {:type :submit} "Add new patient"]
+     ]])))
 
 (defn header []
   [:div.row
