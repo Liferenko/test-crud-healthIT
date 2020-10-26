@@ -97,15 +97,15 @@
 (defn home-page []
   [:div
     [header]
-    [:div.container-fluid [:h2 "List of patients"]
-     [:p "Add a new patient's info below:"]
+    [:div.container-fluid.col-sm-12.col-md-6 [:h2 "List of patients"]
      [:ul.container-fluid
       (for [patient @patients]
         (patient-data patient))]
-     [:div.card {:style {:padding "10px" :margin "20px"}}
+    ]
+     [:div.card.col-sm-12.col-md-6 {:style {:padding "10px" :margin "20px"}}
+       [:p "Add a new patient's info below:"]
        [patient-form]
       ]
-    ]
     [footer]
   ])
 

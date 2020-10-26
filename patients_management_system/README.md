@@ -2,7 +2,7 @@
 ### TODO:
 - [x] to rename all items as clients
 - [x] to extend item data as client data
-- [ ] to extend form for adding all neccessary client's data
+- [x] to extend form for adding all neccessary client's data
 - [ ] to move list of clients to the backend
 - [ ] to request from backend about the list of client 
 - [ ] to opserve a list of tiny cliniq's patients (GET list)
