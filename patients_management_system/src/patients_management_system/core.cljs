@@ -28,33 +28,40 @@
 
 ;; -------------------------
 ;; Views
+(defn formInput 
+  [atomValue placeholder value]
+     [:input.input-group-text {:type "text"
+                               :value atomValue
+                               :placeholder placeholder
+                               :on-change (fn [event]
+                                            (reset! value (.-value (.-target event))))}]
+  )
 
 (defn patient-form []
   (let [fullName (r/atom "") 
         gender (r/atom "other")
         bitrhDate (r/atom "1992/12/11")
-        address (r/atom "Kiev")
+        address (r/atom "")
         policyNumber (r/atom "101-11-0001")]
     (fn []
-    [:div.container 
+    [:div.card-body 
+     [:h4.card-title "New patient's data"]
      [:form {:on-submit (fn [event] 
                          (.preventDefault event) 
-                         (swap! patients conj {
-                                               :verified false 
-                                               :fullName @fullName
+                         (swap! patients conj {:fullName @fullName
                                                :gender @gender
                                                :birthDate @bitrhDate
                                                :address @address
-                                               :policyNumber @policyNumber})
+                                               :policyNumber @policyNumber
+                                               :verified false })
                          (reset! fullName "")
+                         (reset! address "")
                          )}
-       [:input.input-group-text {:type "text" 
-                                 :value @fullName 
-                                 :placeholder "Add a new item below:"
-                                 :on-change (fn [event] 
-                                              (reset! fullName (.-value (.-target event))))}]
-       [:button {:type :submit} "Add new patient"]
+       [formInput @fullName "Full name" fullName]
+       [formInput @address "Address" address]
+       [:button.btn.btn-primary {:type :submit} "Add new patient"]
      ]])))
+
 
 (defn header []
   [:div.row
@@ -70,12 +77,14 @@
      [:div.col (:birthDate patient)]
      [:div.col (:address patient)]
      [:div.col (:policyNumber patient)]
+     [:div.col 
+      [:button.btn.btn-light.btn-sm "TODO"]]
    ]])
 
 (defn footer []
   [:div.row
    [:div.container.jumbotron
-    [:div "(c) All right reserved | Tiny Cliniq, 2020"]]])
+    [:div [:p.text-muted "(c) All right reserved | Tiny Cliniq, 2020"]]]])
 
 
 (defn home-page []
@@ -86,7 +95,9 @@
      [:ul.container-fluid
       (for [patient @patients]
         (patient-data patient))]
-     [patient-form]
+     [:div.card {:style {:padding "10px" :margin "20px"}}
+       [patient-form]
+      ]
     ]
     [footer]
   ])
