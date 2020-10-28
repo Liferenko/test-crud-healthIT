@@ -1,7 +1,8 @@
 (ns patients-management-system.core
     (:require
       [reagent.core :as r]
-      [reagent.dom :as d]))
+      [reagent.dom :as d]
+      [ajax.core :refer [GET POST]]))
 
 (def patients (r/atom 
              [{:fullName "Robin Scherbatski" 
@@ -23,57 +24,66 @@
                :birthDate "TODO date as valid Date structure" 
                :address "New Jersey" 
                :policyNumber "123-45-6789" 
-               :verified false}
-              ]))
+               :verified false}]))
+
+(defn handler [response]
+  (.log js/console (str "API response: " response)))
+
+(defn error-handler [{:keys [status status-text]}]
+  (.log js/console (str "something bad happened: " status " " status-text)))
+
+(defn get-patients []
+  (GET {:url "http://localhost:3001/patients"}))
+
+
+
+
 
 ;; -------------------------
 ;; Views
 (defn formInput 
   [atomValue placeholder value]
   [:div.col-6
-     [:input.input-group-text {:type "text"
+   [:input.input-group-text {:type "text"
                                :value atomValue
                                :placeholder placeholder
                                :on-change (fn [event]
-                                            (reset! value (.-value (.-target event))))}]
-  ])
+                                            (reset! value (.-value (.-target event))))}]])
 
 (defn patient-form []
   (let [fullName (r/atom "") 
-        gender (r/atom "other")
+        gender (r/atom "")
         birthDate (r/atom "")
         address (r/atom "")
         policyNumber (r/atom "")]
     (fn []
-    [:div.card-body 
-     [:h4.card-title "New patient's data"]
-     [:form {:on-submit (fn [event] 
-                         (.preventDefault event) 
-                         (swap! patients conj {:fullName @fullName
-                                               :gender @gender
-                                               :birthDate @birthDate
-                                               :address @address
-                                               :policyNumber @policyNumber
-                                               :verified false })
-                         (reset! fullName "")
-                         (reset! address "")
-                         )}
-      [:div.row
-       [formInput @fullName "Full name" fullName]
-       [formInput @gender "Select gender" gender]
-       [formInput @birthDate "Birth date" birthDate]
-       [formInput @address "Address" address]
-       [formInput @policyNumber "Enter incurance policy number" policyNumber]
-      ]
+      [:div.card
+        [:div.card-body 
+         [:h4.card-title "New patient's data"]
+         [:form {:on-submit (fn [event] 
+                             (.preventDefault event) 
+                             (swap! patients conj {:fullName @fullName
+                                                   :gender @gender
+                                                   :birthDate @birthDate
+                                                   :address @address
+                                                   :policyNumber @policyNumber
+                                                   :verified false })
+                             (reset! fullName "")
+                             (reset! address ""))}
+          [:div.row
+           [formInput @fullName "Full name" fullName]
+           [formInput @gender "Select gender" gender]
+           [formInput @birthDate "Birth date" birthDate]
+           [formInput @address "Address" address]
+           [formInput @policyNumber "Enter incurance policy number" policyNumber]]
 
-       [:button.btn.btn-primary {:type :submit} "Add new patient"]
-     ]])))
-
+           [:button.btn.btn-primary {:type :submit} "Add new patient"]]]])))
 
 (defn header []
-  [:div.row
-   [:div.container.jumbotron
-    [:div.text-center "Welcome to Tiny Cliniq!"]]])
+  [:div
+   [:div.jumbotron
+    [:div.text-center 
+     [:h1 "Welcome to Tiny Cliniq!"]]]])
 
 (defn patient-data [patient]
   [:li.list-group-item.list-group-item-action
@@ -85,29 +95,32 @@
      [:div.col (:address patient)]
      [:div.col (:policyNumber patient)]
      [:div.col 
-      [:button.btn.btn-light.btn-sm "TODO"]]
-   ]])
+      [:button.btn.btn-light.btn-sm {:on-click get-patients} "TODO"]]]]) 
+
+(defn content []
+  [:div.row.container-fluid
+    [:div.col-sm-12.col-md-7 
+     [:a {:href "http://localhost:8080/patients"} "get list of patients from here"]
+     [:h4 "List of patients"]
+     [:ul
+      (for [patient @patients]
+        (patient-data patient))]
+    ]
+    [:div.col-sm-12.col-md-4 
+     [:h4 "Add a new patient's info below:"]
+     [patient-form]]])
 
 (defn footer []
-  [:div.row
-   [:div.container.jumbotron
+  [:div
+   [:div.jumbotron
     [:div [:p.text-muted "(c) All right reserved | Tiny Cliniq, 2020"]]]])
 
 
 (defn home-page []
   [:div
     [header]
-    [:div.container-fluid.col-sm-12.col-md-6 [:h2 "List of patients"]
-     [:ul.container-fluid
-      (for [patient @patients]
-        (patient-data patient))]
-    ]
-     [:div.card.col-sm-12.col-md-6 {:style {:padding "10px" :margin "20px"}}
-       [:p "Add a new patient's info below:"]
-       [patient-form]
-      ]
-    [footer]
-  ])
+    [content]
+    [footer]])
 
 ;; -------------------------
 ;; Initialize app
