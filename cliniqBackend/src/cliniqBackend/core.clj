@@ -18,4 +18,4 @@
   [& args]
   (db/set-default-db-connection! db-spec)
   (models/set-root-namespace! 'cliniqBackend.models)
-  (run-jetty app {:port 8080}))
+  (run-jetty app {:port 3001}))

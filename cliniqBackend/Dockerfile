@@ -5,6 +5,6 @@ RUN ["apt-get", "install", "-y", "vim"]
 RUN ["apt-get", "install", "-y", "tree"]
 COPY . /usr/src/app
 RUN ["mv", ".vimrc", "//root/.vimrc"]
-EXPOSE 8080
+EXPOSE 3001
 
 # Maybe I can use that docker-compose example for psql+cljs - https://medium.com/@sagarjauhari/clojure-postgres-on-docker-24ad5832803d

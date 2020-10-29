@@ -23,7 +23,7 @@
   (created (str "/patients/" id) {:id id}))
 
 (defn create-patient-handler [create-patient-req]
-  (->> (create-patient-req)  ;; TODO remove canonicalize-patient-req
+  (->> (create-patient-req) 
        (db/insert! Patient) 
        :id 
        id->created))
@@ -54,20 +54,19 @@
   (ok))
 
 
-;;;;;;;;;;;; Routes
-(def patient-routes 
+(def patient-routes  ;; TODO refactor :headers as a let
   [(POST "/patients" []
          :body [create-patient-req PatientRequestSchema]
          (create-patient-handler create-patient-req))
-   (GET "/patients/:id" []
+   (GET "/patients/:id" [] ;; THAT WORKS
         :path-params [id :- s/Int]
         (get-patient-handler id))
-   (GET "/patients" []
+   (GET "/patients" [] ;; THAT WORKS
         (get-patients-handler))
    (PUT "/patients/:id" []
         :path-params [id :- s/Int]
         :body [update-patient-req PatientRequestSchema]
         (update-patient-handler id update-patient-req))
-   (DELETE "/patients/:id" []
+   (DELETE "/patients/:id" [] ;; THAT WORKS
            :path-params [id :- s/Int]
            (delete-patient-handler id))])
