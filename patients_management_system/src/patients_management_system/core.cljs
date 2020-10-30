@@ -2,8 +2,9 @@
     (:require
       [reagent.core :as r]
       [reagent.dom :as d]
-      [ajax.core :refer [GET POST]]))
+      [ajax.core :refer [GET POST PUT DELETE]]))
 
+(defonce patient (r/atom []))
 (def patients (r/atom 
              [{:fullName "Robin Scherbatski" 
                :gender "female" 
@@ -33,22 +34,43 @@
   (.log js/console (str "something bad happened: " status " " status-text)))
 
 (defn get-patients []
-  (GET {:url "http://localhost:3001/patients"}))
+  (GET "http://localhost:3001/patients" 
+       {:handler handler
+        :error-handler error-handler
+        :with-credentials false}))
 
+(defn get-patient []
+  (GET "http://localhost:3001/patients/:id" 
+       {:handler handler
+        :error-handler error-handler}))
 
+(defn add-patient! []
+  (POST "http://localhost:3001/patients" 
+       {:handler handler
+        :error-handler error-handler}))
+
+(defn update-patient! [patient-id]
+  (PUT (str "http://localhost:3001/patients/" patient-id) ;; TODO add id as a parameter
+       {:handler handler
+        :error-handler error-handler}))
+
+(defn remove-patient! [patient-id]
+  (DELETE (str "http://localhost:3001/patients/" patient-id) ;; TODO add id as a parameter
+       {:handler handler
+        :error-handler error-handler}))
 
 
 
 ;; -------------------------
 ;; Views
 (defn formInput 
-  [atomValue placeholder value]
+  [input-type atomValue placeholder value]
   [:div.col-6
-   [:input.input-group-text {:type "text"
-                               :value atomValue
-                               :placeholder placeholder
-                               :on-change (fn [event]
-                                            (reset! value (.-value (.-target event))))}]])
+   [:input.input-group-text {:type input-type
+                             :value atomValue
+                             :placeholder placeholder
+                             :on-change (fn [event]
+                                          (reset! value (.-value (.-target event))))}]])
 
 (defn patient-form []
   (let [fullName (r/atom "") 
@@ -68,14 +90,15 @@
                                                    :address @address
                                                    :policyNumber @policyNumber
                                                    :verified false })
+                             (add-patient! @patient) ;; TODO It's not finished. It is a blueprint
                              (reset! fullName "")
                              (reset! address ""))}
           [:div.row
-           [formInput @fullName "Full name" fullName]
-           [formInput @gender "Select gender" gender]
-           [formInput @birthDate "Birth date" birthDate]
-           [formInput @address "Address" address]
-           [formInput @policyNumber "Enter incurance policy number" policyNumber]]
+           [formInput "text" @fullName "Full name" fullName]
+           [formInput "text" @gender "Select gender" gender]
+           [formInput "date" @birthDate "Birth date" birthDate]
+           [formInput "text" @address "Address" address]
+           [formInput "number" @policyNumber "Enter incurance policy number" policyNumber]]
 
            [:button.btn.btn-primary {:type :submit} "Add new patient"]]]])))
 
@@ -94,8 +117,15 @@
      [:div.col (:birthDate patient)]
      [:div.col (:address patient)]
      [:div.col (:policyNumber patient)]
-     [:div.col 
-      [:button.btn.btn-light.btn-sm {:on-click get-patients} "TODO"]]]]) 
+     [:div.col.dropdown 
+      [:button#dropdownMenuButton.btn.btn-light.btn-sm.dropdown-toggle 
+       {:type "button" 
+        :data-toggle "dropdown" 
+        :aria-haspopup "true" 
+        :aria-expanded "false"} "..."
+         [:div.dropdown-menu
+          [:span.dropdown-item {:on-click (fn [patient] (remove-patient! (:id patient)))} "Remove patient"]
+          [:span.dropdown-item {:on-click (fn [patient] (update-patient! (:id patient)))} "Edit patient"]]]]]]) 
 
 (defn content []
   [:div.row.container-fluid
