@@ -1,0 +1,15 @@
+db:
+    image: postgres
+    ports:
+        - "5432:5432"
+    env_file: .env
+backend:
+    #image: clojure
+    build: .
+    command: lein run
+    ports:
+        - "80:80"
+    volumes:
+        - .:/usr/src/app
+    links:
+        - db
