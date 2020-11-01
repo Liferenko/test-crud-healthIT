@@ -1,7 +1,6 @@
 (ns cliniqBackend.patient
   (:require [schema.core :as s]
             [cliniqBackend.models.patient :refer [Patient]]
-            ;;[buddy.hashers :as hashers] ;; TODO remove as unused
             [clojure.set :refer [rename-keys]]
             [toucan.db :as db]
             [compojure.api.sweet :refer [POST GET PUT DELETE]]
@@ -54,7 +53,7 @@
   (ok))
 
 
-(def patient-routes  ;; TODO refactor :headers as a let
+(def patient-routes 
   [(POST "/patients" []
          :body [create-patient-req PatientRequestSchema]
          (create-patient-handler create-patient-req))

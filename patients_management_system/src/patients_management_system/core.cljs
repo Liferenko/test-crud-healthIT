@@ -5,14 +5,6 @@
       [ajax.core :refer [GET POST PUT DELETE]]))
 
 (defonce patient (r/atom [])) ;; TODO R u sure we need that defonce?
-(def patients (r/atom 
-             []))
-
-(def cors-headers
-    "Generic CORS headers"
-      {"Access-Control-Allow-Origin" "*"
-       "Access-Control-Allow-Headers"  "*"
-       "Access-Control-Allow-Methods" "GET, POST, PUT, DELETE"}) 
 
 (defn handler [response]
   (.log js/console (str "API response: " response)))
@@ -22,33 +14,31 @@
 
 (defn get-patients []
   (GET "http://localhost:3001/patients" 
-       {:headers cors-headers
-        :handler handler
+       {:handler handler
         :error-handler error-handler}))
 
 (defn get-patient []
   (GET "http://localhost:3001/patients/:id" 
-       {:headers cors-headers
-        :handler handler
+       {:handler handler
         :error-handler error-handler}))
 
 (defn add-patient! []
   (POST "http://localhost:3001/patients" 
-       {:headers cors-headers
-        :handler handler
+       {:handler handler
         :error-handler error-handler}))
 
 (defn update-patient! [patient-id]
   (PUT (str "http://localhost:3001/patients/" patient-id) ;; TODO add id as a parameter
-       {:headers cors-headers
-        :handler handler
+       {:handler handler
         :error-handler error-handler}))
 
 (defn remove-patient! [patient-id]
   (DELETE (str "http://localhost:3001/patients/" patient-id) ;; TODO add id as a parameter
-       {:headers cors-headers
-        :handler handler
+       {:handler handler
         :error-handler error-handler}))
+
+(def patients (r/atom 
+             []))
 
 
 
