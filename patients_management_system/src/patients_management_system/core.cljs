@@ -13,8 +13,7 @@
                         :verified true}]))
 
 (defn handler [response]
-  (println patients)
-  (println response)
+  (swap! patients conj (first response))
   (.log js/console response))
 
 (defn error-handler [{:keys [status status-text]}]
