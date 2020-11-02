@@ -54,18 +54,23 @@
 
 
 (def patient-routes 
-  [(POST "/patients" []
-         :body [create-patient-req PatientRequestSchema]
-         (create-patient-handler create-patient-req))
+  [
+   (GET "/patients" [] ;; THAT WORKS
+        (get-patients-handler))
+
    (GET "/patients/:id" [] ;; THAT WORKS
         :path-params [id :- s/Int]
         (get-patient-handler id))
-   (GET "/patients" [] ;; THAT WORKS
-        (get-patients-handler))
+
+   (POST "/patients" []
+         :body [create-patient-req PatientRequestSchema]
+         (create-patient-handler create-patient-req))
+
    (PUT "/patients/:id" []
         :path-params [id :- s/Int]
         :body [update-patient-req PatientRequestSchema]
         (update-patient-handler id update-patient-req))
-   (DELETE "/patients/:id" [] ;; THAT WORKS
-           :path-params [id :- s/Int]
+
+   (DELETE "/patients/:id" [] ;; THAT WORKS 
+           :path-params [id :- s/Int] 
            (delete-patient-handler id))])

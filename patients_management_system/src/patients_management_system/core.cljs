@@ -4,16 +4,10 @@
       [reagent.dom :as d]
       [ajax.core :refer [GET POST PUT DELETE]]))
 
-(def patients (r/atom [{
-                        :full_name "Alan"
-                        :gender "female"
-                        :address "asfd 333, 449999999"
-                        :policy_number 112334444
-                        :birth_date "2020-11-02"
-                        :verified true}]))
+(def patients (r/atom []))
 
 (defn handler [response]
-  (swap! patients conj (first response))
+  
   (.log js/console response))
 
 (defn error-handler [{:keys [status status-text]}]
@@ -21,7 +15,7 @@
 
 (defn get-patients []
   (GET "http://localhost:3001/patients" 
-       {:handler handler
+       {:handler #(swap! patients conj (last %))
         :error-handler error-handler
         :response-format :json
         :keywords? true}))

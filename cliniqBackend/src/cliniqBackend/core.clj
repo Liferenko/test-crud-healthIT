@@ -23,4 +23,4 @@
   (run-jetty (wrap-cors (wrap-multipart-params app) 
                         :access-control-allow-methods #{:get :post :delete :options}
                         :access-control-allow-headers #{:accept :content-type}
-                        :access-control-allow-origin [#"http://localhost:3000"]) {:port 3001}))
+                        :access-control-allow-origin [#"http://localhost:3000"]) {:port 3001})) ;; TODO to change that "localhost:3000" to actual host name
