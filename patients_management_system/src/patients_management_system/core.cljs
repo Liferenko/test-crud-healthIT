@@ -4,10 +4,18 @@
       [reagent.dom :as d]
       [ajax.core :refer [GET POST PUT DELETE]]))
 
-(defonce patient (r/atom [])) ;; TODO R u sure we need that defonce?
+(def patients (r/atom [{
+                        :full_name "Alan"
+                        :gender "female"
+                        :address "asfd 333, 449999999"
+                        :policy_number 112334444
+                        :birth_date "2020-11-02"
+                        :verified true}]))
 
 (defn handler [response]
-  (.log js/console (str "API response: " response)))
+  (println patients)
+  (println response)
+  (.log js/console response))
 
 (defn error-handler [{:keys [status status-text]}]
   (.log js/console (str "something bad happened: " status " " status-text)))
@@ -15,30 +23,39 @@
 (defn get-patients []
   (GET "http://localhost:3001/patients" 
        {:handler handler
-        :error-handler error-handler}))
+        :error-handler error-handler
+        :response-format :json
+        :keywords? true}))
 
 (defn get-patient []
   (GET "http://localhost:3001/patients/:id" 
        {:handler handler
-        :error-handler error-handler}))
+        :error-handler error-handler
+        :response-format :json
+        :keywords? true}))
 
 (defn add-patient! []
   (POST "http://localhost:3001/patients" 
        {:handler handler
-        :error-handler error-handler}))
+        :error-handler error-handler
+        :response-format :json
+        :keywords? true}))
 
 (defn update-patient! [patient-id]
   (PUT (str "http://localhost:3001/patients/" patient-id) ;; TODO add id as a parameter
        {:handler handler
-        :error-handler error-handler}))
+        :error-handler error-handler
+        :response-format :json
+        :keywords? true}))
 
 (defn remove-patient! [patient-id]
   (DELETE (str "http://localhost:3001/patients/" patient-id) ;; TODO add id as a parameter
        {:handler handler
-        :error-handler error-handler}))
+        :error-handler error-handler
+        :response-format :json
+        :keywords? true}))
 
-(def patients (r/atom 
-             []))
+
 
 
 
@@ -65,13 +82,13 @@
          [:h4.card-title "New patient's data"]
          [:form {:on-submit (fn [event] 
                              (.preventDefault event) 
-                             (swap! patients conj {:fullName @fullName
+                             (swap! patients conj {:full_name @fullName
                                                    :gender @gender
-                                                   :birthDate @birthDate
+                                                   :birth_date @birthDate
                                                    :address @address
-                                                   :policyNumber @policyNumber
+                                                   :policy_number @policyNumber
                                                    :verified true })
-                             (add-patient! @patient) ;; TODO It's not finished. It is a blueprint
+                             ;;(add-patient! @patient) ;; TODO It's not finished. It is a blueprint
                              (reset! fullName "")
                              (reset! address ""))}
           [:div.row
@@ -93,11 +110,11 @@
   [:li.list-group-item.list-group-item-action
    {:style {:color (if (:verified patient) "green" "red")}} 
    [:div.row
-     [:div.col (:fullName patient)] 
+     [:div.col (:full_name patient)] 
      [:div.col (:gender patient)] 
-     [:div.col (:birthDate patient)]
+     [:div.col (:birth_date patient)]
      [:div.col (:address patient)]
-     [:div.col (:policyNumber patient)]
+     [:div.col (:policy_number patient)]
      [:div.col.dropdown 
       [:button#dropdownMenuButton.btn.btn-light.btn-sm.dropdown-toggle 
        {:type "button" 
