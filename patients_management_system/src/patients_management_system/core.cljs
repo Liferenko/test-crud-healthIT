@@ -15,7 +15,7 @@
 
 (defn get-patients []
   (GET "http://localhost:3001/patients" 
-       {:handler #((swap! patients conj (first %)) (swap! patients conj (last %)))  ;; TODO show all items
+       {:handler #(swap! patients concat %)
        ;;{:handler #(prn %)  ;; TODO show all items
         :error-handler error-handler
         :response-format :json
