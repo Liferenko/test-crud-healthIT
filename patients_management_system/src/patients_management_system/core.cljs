@@ -15,7 +15,7 @@
 
 (defn get-patients []
   (GET "http://localhost:3001/patients" 
-       {:handler #((swap! patients conj (last %)) (swap! patients conj (first %))) 
+       {:handler #((swap! patients conj (first %)) (swap! patients conj (last %)))  ;; TODO show all items
         :error-handler error-handler
         :response-format :json
         :keywords? true}))
@@ -100,7 +100,9 @@
   [:li.list-group-item.list-group-item-action
    {:style {:color (if (:verified patient) "green" "red")}} 
    [:div.row
-     [:div.col (:full_name patient)] 
+     [:div.col (:id patient)] 
+     [:div.col 
+      [:a {:href (str "/patient/info/" (:id patient))} (:full_name patient)]] 
      [:div.col (:gender patient)] 
      [:div.col (:birth_date patient)]
      [:div.col (:address patient)]
