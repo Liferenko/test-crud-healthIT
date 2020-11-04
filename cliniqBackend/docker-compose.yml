@@ -2,7 +2,11 @@ db:
     image: postgres
     ports:
         - "5432:5432"
-    env_file: .env
+    env: 
+        POSTGRES_PASSWORD=postgres
+        POSTGRES_DB=tiny-cliniq
+    volumes:
+        -
 backend:
     #image: clojure
     build: .

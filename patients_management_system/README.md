@@ -5,6 +5,7 @@
 - [x] to extend form for adding all neccessary client's data
 - [x] to read about [cljs-ajax](https://github.com/JulianBirch/cljs-ajax)
 - [ ] to observe a list of tiny cliniq's patients (GET list)
+- [ ] to open current patients med book
 - [ ] to add new patient to the list (create new-patient)
 - [ ] options button
     1. [ ] to remove patient from the list (remove patient)

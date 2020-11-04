@@ -100,14 +100,14 @@
   [:li.list-group-item.list-group-item-action
    {:style {:color (if (:verified patient) "green" "red")}} 
    [:div.row
-     [:div.col (:id patient)] 
-     [:div.col 
+     [:div.col-1 (:id patient)] 
+     [:div.col-2
       [:a {:href (str "/patient/info/" (:id patient))} (:full_name patient)]] 
-     [:div.col (:gender patient)] 
-     [:div.col (:birth_date patient)]
-     [:div.col (:address patient)]
-     [:div.col (:policy_number patient)]
-     [:div.col.dropdown 
+     [:div.col-1 (:gender patient)] 
+     [:div.col-2 (:birth_date patient)]
+     [:div.col-3 (:address patient)]
+     [:div.col-2 (:policy_number patient)]
+     [:div.col-1.dropdown 
       [:button#dropdownMenuButton.btn.btn-light.btn-sm.dropdown-toggle 
        {:type "button" 
         :data-toggle "dropdown" 
