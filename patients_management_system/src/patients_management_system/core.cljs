@@ -16,6 +16,7 @@
 (defn get-patients []
   (GET "http://localhost:3001/patients" 
        {:handler #((swap! patients conj (first %)) (swap! patients conj (last %)))  ;; TODO show all items
+       ;;{:handler #(prn %)  ;; TODO show all items
         :error-handler error-handler
         :response-format :json
         :keywords? true}))
@@ -27,10 +28,11 @@
         :response-format :json
         :keywords? true}))
 
-(defn add-patient! []
+(defn add-patient! [params]
   (POST "http://localhost:3001/patients"
        {:handler handler
         :error-handler error-handler
+        :params {:full_name params :gender params :birth_date params :address params :policy_number params :verified true }
         :response-format :json
         :keywords? true}))
 
@@ -60,6 +62,8 @@
                              :on-change (fn [event]
                                           (reset! value (.-value (.-target event))))}]])
 
+(def new-patient [])
+
 (defn patient-form []
   (let [fullName (r/atom "") 
         gender (r/atom "")
@@ -72,13 +76,7 @@
          [:h4.card-title "New patient's data"]
          [:form {:on-submit (fn [event] 
                              (.preventDefault event) 
-                             (swap! patients conj {:full_name @fullName
-                                                   :gender @gender
-                                                   :birth_date @birthDate
-                                                   :address @address
-                                                   :policy_number @policyNumber
-                                                   :verified true })
-                             ;;(add-patient! @patient) ;; TODO It's not finished. It is a blueprint
+                             (add-patient! {:full_name @fullName :gender @gender :birth_date @birthDate :address @address :policy_number @policyNumber :verified true })
                              (reset! fullName "")
                              (reset! address ""))}
           [:div.row
