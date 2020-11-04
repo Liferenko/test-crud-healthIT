@@ -3,7 +3,7 @@
 - [x] to rename all items as clients
 - [x] to extend item data as client data
 - [x] to extend form for adding all neccessary client's data
-- [ ] to read about [cljs-ajax](https://github.com/JulianBirch/cljs-ajax)
+- [x] to read about [cljs-ajax](https://github.com/JulianBirch/cljs-ajax)
 - [ ] to observe a list of tiny cliniq's patients (GET list)
 - [ ] to add new patient to the list (create new-patient)
 - [ ] options button

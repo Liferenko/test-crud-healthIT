@@ -7,28 +7,28 @@
 (def patients (r/atom []))
 
 (defn handler [response]
-  
   (.log js/console response))
 
 (defn error-handler [{:keys [status status-text]}]
   (.log js/console (str "something bad happened: " status " " status-text)))
 
+
 (defn get-patients []
   (GET "http://localhost:3001/patients" 
-       {:handler #(swap! patients conj (last %))
+       {:handler #((swap! patients conj (last %)) (swap! patients conj (first %))) 
         :error-handler error-handler
         :response-format :json
         :keywords? true}))
 
-(defn get-patient []
-  (GET "http://localhost:3001/patients/:id" 
+(defn get-patient [patient-id]
+  (GET (str "http://localhost:3001/patients/" patient-id) 
        {:handler handler
         :error-handler error-handler
         :response-format :json
         :keywords? true}))
 
 (defn add-patient! []
-  (POST "http://localhost:3001/patients" 
+  (POST "http://localhost:3001/patients"
        {:handler handler
         :error-handler error-handler
         :response-format :json
@@ -47,9 +47,6 @@
         :error-handler error-handler
         :response-format :json
         :keywords? true}))
-
-
-
 
 
 ;; -------------------------
@@ -131,7 +128,7 @@
      [patient-form]]])
 
 (defn footer []
-  [:div
+  [:div.footer
    [:div.jumbotron
     [:div [:p.text-muted "(c) All right reserved | Tiny Cliniq, 2020"]]]])
 
@@ -140,7 +137,8 @@
   [:div
     [header]
     [content]
-    [footer]])
+    ;;[footer]
+    ])
 
 ;; -------------------------
 ;; Initialize app
