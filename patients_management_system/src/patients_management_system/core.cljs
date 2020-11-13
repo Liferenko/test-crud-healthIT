@@ -99,7 +99,7 @@
    [:div.row
      [:div.col-1 (:id patient)] 
      [:div.col-2
-      [:a {:href (str "/patient/info/" (:id patient))} (:full_name patient)]] 
+      [:a {:href (str temp-host "/" (:id patient))} (:full_name patient)]] 
      [:div.col-1 (:gender patient)] 
      [:div.col-2 (:birth_date patient)]
      [:div.col-3 (:address patient)]
@@ -111,8 +111,8 @@
         :aria-haspopup "true" 
         :aria-expanded "false"} "..."
          [:div.dropdown-menu
-          [:span.dropdown-item {:on-click (fn [patient] (remove-patient! (:id patient)))} "Remove patient"] ;; TODO to fix an :on-click fn
-          [:span.dropdown-item {:on-click (fn [patient] (update-patient! (:id patient)))} "Edit patient"]]]]]]) 
+          [:span.dropdown-item {:on-click #(remove-patient! (:id %))} "Remove patient"] ;; TODO to fix an :on-click fn
+          [:span.dropdown-item {:on-click #(update-patient! (:id %))} "Edit patient"]]]]]]) 
 
 (defn content []
   [:div.row.container-fluid
