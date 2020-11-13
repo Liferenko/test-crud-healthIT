@@ -5,6 +5,8 @@
       [ajax.core :refer [GET POST PUT DELETE]]))
 
 (def patients (r/atom []))
+(def temp-host 
+  "http://localhost:3001/patients")
 
 (defn handler [response]
   (.log js/console response))
@@ -14,41 +16,38 @@
 
 
 (defn get-patients []
-  (GET "http://localhost:3001/patients" 
+  (GET temp-host 
        {:handler #(swap! patients concat %)
-       ;;{:handler #(prn %)  ;; TODO show all items
         :error-handler error-handler
         :response-format :json
         :keywords? true}))
 
 (defn get-patient [patient-id]
-  (GET (str "http://localhost:3001/patients/" patient-id) 
+  (GET (str temp-host "/" patient-id) 
        {:handler handler
         :error-handler error-handler
         :response-format :json
         :keywords? true}))
 
 (defn add-patient! [params]
-  (POST "http://localhost:3001/patients"
-       {:handler handler
+  (POST temp-host 
+        {:handler handler
         :error-handler error-handler
         :params {:full_name params :gender params :birth_date params :address params :policy_number params :verified true }
         :response-format :json
         :keywords? true}))
 
 (defn update-patient! [patient-id]
-  (PUT (str "http://localhost:3001/patients/" patient-id) ;; TODO add id as a parameter
+  (PUT (str temp-host "/" patient-id) ;; TODO add id as a parameter
        {:handler handler
         :error-handler error-handler
         :response-format :json
         :keywords? true}))
 
 (defn remove-patient! [patient-id]
-  (DELETE (str "http://localhost:3001/patients/" patient-id) ;; TODO add id as a parameter
+  (DELETE (str temp-host "/" patient-id) ;; TODO add id as a parameter
        {:handler handler
-        :error-handler error-handler
-        :response-format :json
-        :keywords? true}))
+        :error-handler error-handler}))
 
 
 ;; -------------------------
@@ -130,7 +129,7 @@
 (defn footer []
   [:div.footer
    [:div.jumbotron
-    [:div [:p.text-muted "(c) All right reserved | Tiny Cliniq, 2020"]]]])
+    [:div [:p.text-muted "(c) All rights reserved | Tiny Cliniq, 2020"]]]])
 
 
 (defn home-page []
@@ -144,8 +143,8 @@
 ;; Initialize app
 
 (defn mount-root []
+  (get-patients)
   (d/render [home-page] (.getElementById js/document "app")))
 
 (defn ^:export init! []
-  (get-patients)
   (mount-root))
